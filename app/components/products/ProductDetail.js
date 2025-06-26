@@ -1,29 +1,39 @@
-import Image from "next/image";
-import GoBack from "../ui/GoBack";
-import QtySelector from "./QtySelector";
+import Image from "next/image"
+import GoBack from "../ui/GoBack"
+import QtySelector from "./QtySelector"
 
 const ProductDetail = async ({ slug }) => {
   const item = await fetch(`${process.env.API_URL}/api/product/${slug}`)
     .then((res) => {
       if (!res.ok) {
-        throw new Error(`HTTP error! Status: ${res.status}`);
+        throw new Error(`HTTP error! Status: ${res.status}`)
       }
-      return res.json();
+      return res.json()
     })
-    .catch((error) => console.error("Fetch error:", error));
+    .catch((error) => console.error("Fetch error:", error))
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-10">
       <GoBack />
 
       <section className="flex flex-col md:flex-row gap-10 mt-8 bg-white p-6 rounded-lg shadow-md border border-gray-200">
-        {/* Imagen con contenedor relative */}
+        {/* Imagen con leyendas y contenedor relative */}
         <div className="w-full md:w-1/2 flex justify-center relative">
+          {/* Sin stock */}
           {item.inStock === 0 && (
             <div className="absolute top-2 right-2 bg-red-600 text-white px-3 py-1 rounded-bl-md font-semibold text-sm z-10 shadow-lg whitespace-nowrap">
-              Sin stock3
+              Sin stock
             </div>
           )}
+
+          {/* Última disponible */}
+          {item.inStock === 1 && (
+            <div className="absolute top-2 right-2 bg-yellow-400 text-black px-2 py-1 rounded-md text-xs font-semibold z-10 shadow"
+>
+              ¡Última disponible!
+            </div>
+          )}
+
           <Image
             src={item.image}
             alt={item.title}
@@ -55,7 +65,7 @@ const ProductDetail = async ({ slug }) => {
         <p className="text-gray-700 leading-relaxed">{item.description}</p>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default ProductDetail;
+export default ProductDetail

@@ -1,5 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from "next/image"
+import Link from "next/link"
 
 const ProductCard = ({ item }) => {
   return (
@@ -12,10 +12,17 @@ const ProductCard = ({ item }) => {
         }
       `}
     >
-      {/* Leyenda Sin stock arriba a la derecha */}
+      {/* Leyenda Sin stock */}
       {item.inStock === 0 && (
         <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded font-semibold text-xs z-10">
           Sin stock
+        </div>
+      )}
+
+      {/* Leyenda Última disponible */}
+      {item.inStock === 1 && (
+        <div className="absolute top-2 right-2 bg-yellow-400 text-black px-2 py-1 rounded font-semibold text-xs z-10">
+          ¡Última disponible!
         </div>
       )}
 
@@ -37,7 +44,7 @@ const ProductCard = ({ item }) => {
         </div>
       </Link>
     </article>
-  );
-};
+  )
+}
 
-export default ProductCard;
+export default ProductCard
