@@ -21,7 +21,7 @@ const ProductDetail = async ({ slug }) => {
         <div className="w-full md:w-1/2 flex justify-center relative">
           {item.inStock === 0 && (
             <div className="absolute top-2 right-2 bg-red-600 text-white px-3 py-1 rounded-bl-md font-semibold text-sm z-10 shadow-lg whitespace-nowrap">
-              Sin stock
+              Sin stock3
             </div>
           )}
           <Image
