@@ -46,7 +46,7 @@ const ClientForm = () => {
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  // Validar stock antes de continuar
+  // Validar stock
   for (const item of cart) {
     const productRef = doc(db, "productos", item.slug);
     const productSnap = await getDoc(productRef);
@@ -54,15 +54,16 @@ const handleSubmit = async (e) => {
 
     if (currentStock < item.quantity) {
       alert(`No hay suficiente stock para ${item.title}`);
-      return; // Cancelar el proceso
+      return;
     }
   }
 
-  await createOrder(values, cart);
-  await updateStockAfterPurchase();
-  emptyCart();
-  router.push("/thanks");
+  const orderId = await createOrder(values, cart);
+
+  // Redirigir al "simulador de pago"
+  router.push(`/checkout/${orderId}`);
 };
+
 
   return (
     <div className="p-4 md:p-6 bg-gray-100 rounded-lg shadow-md">
